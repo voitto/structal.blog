@@ -43,13 +43,17 @@ jQuery(function($){
     },
     serverChanges: function(data) {
       var posts = data;
-      Post.each(function(p) {
-        for (n in posts.results)
-          if (posts.results[n].id == p.id) {
-            Post.fetch();
-            this.render();
-          }
-      });
+      for (n in posts.results) {
+        var found = false;
+        Post.each(function(p) {
+          if (posts.results[n].id == p.id)
+            found = true;
+        });
+        if (found == false) {
+          Post.fetch();
+          this.render();
+        }
+      }
     },
     render: function() {
       var el = this;
