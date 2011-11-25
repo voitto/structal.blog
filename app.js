@@ -54,10 +54,10 @@ jQuery(function($){
     render: function() {
       var el = this;
       $.get('tpl/posts/item.html', function(data) {
-      $(".items").html('');
+      el.items.html('');
       posts = Post.all();
       for (p in posts)
-        $(".items").prepend(Mustache.to_html(data,posts[p]));
+        el.items.prepend(Mustache.to_html(data,posts[p]));
       });
     },
     create: function() {
