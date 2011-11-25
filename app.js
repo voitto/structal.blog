@@ -42,16 +42,14 @@ jQuery(function($){
       setInterval( function(){ el.poll( 'posts', 'serverChanges' ) }, 4*1000 );
     },
     serverChanges: function(data) {
-      var postid = [];
+      var posts = data;
       Post.each(function(p) {
-        postid.push( p.id );
+        for (n in posts.results)
+          if (posts.results[n].id == p.id) {
+            Post.fetch();
+            this.render();
+          }
       });
-      for (n in data.results) {
-        if (-1 == ($.inArray(data.results[n].id, postid))) {
-          Post.fetch();
-          this.render();
-        }
-      }
     },
     render: function() {
       var el = this;
