@@ -426,7 +426,9 @@ if (class_exists('MoorAbstractController')) {
   	}
 
   	protected function beforeAction() {}
-  	protected function afterAction() {}
+  	protected function afterAction() {
+  	  trigger_after( strtolower($_SERVER['REQUEST_METHOD']) );
+  	}
   	
   	public function __destruct() {
   		$this->afterAction();
@@ -801,7 +803,9 @@ if (class_exists('MoorAbstractController')) {
   	}
 
   	protected function beforeAction() {}
-  	protected function afterAction() {}
+  	protected function afterAction() {
+  	  trigger_after( strtolower($_SERVER['REQUEST_METHOD']) );
+  	}
   }
   
   

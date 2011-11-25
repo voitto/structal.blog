@@ -38,6 +38,30 @@ jQuery(function($){
       $.get('tpl/posts/list.html', function(data) {
         el.html(Mustache.to_html(data,{}));
       });
+      setInterval( function(){ el.poll( 'posts', 'serverChanges' ) }, 4*1000 );
+    },
+    serverChanges: function(data) {
+      var postid = [];
+      Post.each(function(p) {
+        postid.push( p.id );
+      });
+      for (n in data.results) {
+        if (-1 == ($.inArray(data.results[n].id, postid))) {
+          $.ajax({
+            contentType: 'application/json',
+            dataType: 'json',
+            type: 'GET',
+            url: '?class=posts&id='+data.results[n].id,
+            success: function(data){
+              Post.create({
+                title: data[0].title,
+                author: data[0].author,
+                id: data[0].id
+              });
+            }
+          });
+        }
+      }
     },
     render: function() {
       var el = this;
