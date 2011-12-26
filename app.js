@@ -27,6 +27,7 @@ jQuery(function($){
   var Posts = Spine.Controller.sub({
     events: {
       'click .create': 'create',
+			'keydown #title': 'submitTitle'
     },
     elements: {
       ".items": "items",
@@ -67,7 +68,12 @@ jQuery(function($){
     create: function() {
       item = Post.create({ author:'', title:this.input.val() });
       this.input.val('');
-    }
+    },
+		submitTitle: function(e) {
+			if (e.keyCode == 13) {
+				document.getElementById('submit-button').click();
+			}
+		}
   }); 
 
   return new Posts({el:$("#content")});
